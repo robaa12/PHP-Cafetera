@@ -1,81 +1,86 @@
 <?php
-require_once __DIR__ . '/../app/config/Database.php';
+
+// Load database configuration
+require_once __DIR__ . "/../app/config/Database.php";
 require_once __DIR__ . '/../app/controllers/HomeController.php';
 require_once __DIR__ . '/../app/controllers/OrderController.php';
-function handle_cart_action(OrderController $orderController): void
-{
-    if (empty($_GET['action']) || empty($_GET['id'])) {
-        return;
-    }
-    // index.php?action=add&id=3   =>  action = add, id = 3
-    $action = $_GET['action'];
-    $id     = (int) $_GET['id'];
 
-    switch ($action) {
-        case 'add':
-            $orderController->add($id);
-            break;
-
-        case 'plus':
-            $orderController->increase($id);
-            break;
-
-        case 'minus':
-            $orderController->decrease($id);
-            break;
-
-        default:
-            return;
-    }
-    // POST/Redirect/GET Pattern
-    header("Location: index.php");
-    exit();
-}
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$action = $_GET['action'] ?? 'home';
-
-switch ($action) {
-    case 'add':
-    case 'plus':
-    case 'minus':
-        $db   = new Database();
-        $conn = $db->connect();
-        $orderController = new OrderController($conn);
-        handle_cart_action($orderController);
-        break;
-
-    case 'home':
-    default:
-        $home = new HomeController();
-        $home->index();
-        break;
-}
-
+// Initialize database connection
+$database = new Database();
+$db = $database->connect();
 
 // Get request URI
 $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-// Simple page routing
-$pages = [
-    "/" => __DIR__ . "/../app/views/user/home.php",
-    "/login" => __DIR__ . "/../app/views/auth/login.php",
-    "/logout" => __DIR__ . "/../app/views/auth/logout.php",
-    "/admin/users" => __DIR__ . "/../app/views/admin/users.php",
-    "/admin/add-user" => __DIR__ . "/../app/views/admin/add_user.php",
-];
+// Route to controllers
+switch ($uri) {
 
-// Check if page exists
-if (isset($pages[$uri])) {
-    require_once $pages[$uri];
-    exit();
+    case "/":
+        $controller = new HomeController();
+        $controller->index();
+        break;
+
+    case "/login":
+        require_once __DIR__ . "/../app/controllers/AuthController.php";
+        $controller = new AuthController();
+        $controller->login();
+        break;
+
+    case "/logout":
+        require_once __DIR__ . "/../app/controllers/AuthController.php";
+        $controller = new AuthController();
+        $controller->logout();
+        break;
+
+    case "/admin/users":
+        require_once __DIR__ . "/../app/controllers/UserController.php";
+        $controller = new UserController($db);
+        $controller->index();
+        break;
+
+    case "/admin/add-user":
+        require_once __DIR__ . "/../app/controllers/UserController.php";
+        $controller = new UserController($db);
+        $controller->create();
+        break;
+
+    case "/home":
+        $controller = new HomeController();
+        $controller->index();
+        break;
+
+    case "/cart/add":
+        $controller = new OrderController($db);
+        $controller->add((int)$_GET['id']);
+        break;
+
+    case "/cart/plus":
+        $controller = new OrderController($db);
+        $controller->increase((int)$_GET['id']);
+        break;
+
+    case "/cart/minus":
+        $controller = new OrderController($db);
+        $controller->decrease((int)$_GET['id']);
+        break;
+
+    case "/order/confirm":
+        $controller = new OrderController($db);
+        $controller->confirm($_POST['room_id'], $_POST['notes']);
+        break;
+
+    case "/order/latest":
+        $controller = new OrderController($db);
+        $controller->getLatestOrder();
+        break;
+
+
+    default:
+        // 404 Not Found
+        http_response_code(404);
+        echo "<h1>404 - Page Not Found</h1>";
+        echo "<p>Requested: " . htmlspecialchars($uri) . "</p>";
+        echo "<p><a href='/'>Go Home</a> | <a href='/login'>Login</a></p>";
+        break;
 }
-
-// 404 Not Found
-http_response_code(404);
-echo "<h1>404 - Page Not Found</h1>";
-echo "<p>Requested: " . htmlspecialchars($uri) . "</p>";
-echo '<p><a href="/">Go Home</a></p>';
+?>

@@ -4,13 +4,13 @@ require_once __DIR__ . "/../models/Product.php";
 require_once __DIR__ . "/../models/Room.php";
 require_once __DIR__ . "/../config/Database.php";
 require_once __DIR__ . "/OrderController.php";
-require_once __DIR__ . "/../../routes/web.php";
+// require_once __DIR__ . "/../../routes/web.php";
 
 class HomeController
 {
     public function index()
     {
-    
+
         $db = new Database();
         $conn = $db->connect();
         $productModel = new Product($conn);
@@ -19,10 +19,6 @@ class HomeController
 
         if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
-        }
-
-        if (isset($_GET['action'])) {
-            handle_cart_action($orderController);
         }
 
         if (isset($_GET['add'])) {

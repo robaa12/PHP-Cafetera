@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cafeteria</title>
     <?php include_once __DIR__ . "/../layouts/jsCDN.php"; ?>
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap.css"> -->
 </head>
 
 <body>
+    <?php include __DIR__ . "/../layouts/navbar.php"; ?>
     <div class="container py-4">
         <?php if (!empty($latestOrder)): ?>
             <div class="row mb-4">
