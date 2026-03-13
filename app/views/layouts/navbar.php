@@ -1,0 +1,83 @@
+<style>
+.navbar{
+    background-color:#4E342E !important; /* coffee brown */
+}
+
+.navbar .navbar-brand{
+    color:#FFD54F !important; /* warm yellow */
+    font-weight:bold;
+}
+
+.navbar .nav-link{
+    color:#FFF8E1 !important;
+    font-weight:500;
+}
+
+.navbar .nav-link:hover{
+    color:#FFD54F !important;
+}
+
+.navbar .btn-outline-success{
+    border-color:#FFD54F;
+    color:#FFD54F;
+}
+
+.navbar .btn-outline-success:hover{
+    background-color:#FFD54F;
+    color:#4E342E;
+}
+
+.navbar-coffee{
+    background-color: #6f4e37; /* coffee brown */
+}
+
+.navbar-coffee .navbar-brand,
+.navbar-coffee .nav-link{
+    color: #fff;
+}
+
+.navbar-coffee .nav-link:hover{
+    color: #ffd700; /* coffee shop yellow highlight */
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-coffee">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="/">☕ Cafeteria</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto">
+
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/products">Products</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/orders">Orders</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/users">Users</a>
+        </li>
+
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>

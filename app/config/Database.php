@@ -1,40 +1,24 @@
 <?php
-require_once __DIR__ . '/config.php';
 class Database
 {
-
-    private $host = DB_HOST;
-    private $db = DB_NAME;
-    private $user = DB_USER;
-    private $pass = DB_PASS;
-    private $port = DB_PORT;
-    public $conn = Null;
+    private $host = "127.0.0.1";
+    private $db = "cafeteria_db";
+    private $user = "root";
+    private $pass = "root123";
+    private $port = "3307";
 
     public function connect()
-    
     {
-        try{
-
-        $this->conn = new PDO(
-            "mysql:host=" . $this->host . ";dbname=" . $this->db . ";port=" . $this->port,
+        $conn = new PDO(
+            "mysql:host=" .
+                $this->host .
+                ";port=" .
+                $this->port .
+                ";dbname=" .
+                $this->db,
             $this->user,
-            $this->pass
+            $this->pass,
         );
-
-           $this->conn->setAttribute(
-                PDO::ATTR_ERRMODE,
-                PDO::ERRMODE_EXCEPTION
-            );
-
-            $this->conn->setAttribute(
-                PDO::ATTR_DEFAULT_FETCH_MODE,
-                PDO::FETCH_ASSOC
-            );
-
-        } catch(PDOException $e){
-            die("faild to connect to database: " . $e.getMessage());
-        }
-
-        return $this->conn;
+        return $conn;
     }
 }
