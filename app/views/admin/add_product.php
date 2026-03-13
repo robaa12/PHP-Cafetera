@@ -1,7 +1,12 @@
-<link rel="stylesheet" href="/PHP-Cafetera/public/assets/css/bootstrap.css">
-<link rel="stylesheet" href="/PHP-Cafetera/public/assets/css/sidebar.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.css">
 
 <style>
+  body {
+    background: #f4efe9;
+  }
+  .content {
+    padding: 28px;
+  }
   .panel{
     background: #f7f1ea;
     border-radius: 16px;
@@ -63,13 +68,11 @@
   .close:hover { color: #000; }
 </style>
 
-<div class="app">
-  <?php
-    $active = 'products';
-    require_once __DIR__ . '/../layouts/sidebar.php';
-    require_once __DIR__ . '/../../controllers/categoryController.php';
-    require_once __DIR__ . '/../../controllers/productController.php';
-  ?>
+<?php
+  require_once __DIR__ . '/../layouts/navbar.php';
+  require_once __DIR__ . '/../../controllers/CategoryController.php';
+  require_once __DIR__ . '/../../controllers/ProductController.php';
+?>
 
   <main class="content">
     <div class="panel">
@@ -109,10 +112,8 @@
         </div>
       <?php endif; ?>
 
-      <form action="/PHP-CAFETERA/app/controllers/productController.php" 
-            method="post" 
-            enctype="multipart/form-data">
-              <input type="hidden" name="add_product" value="1">
+      <form action="/admin/products/create" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="add_product" value="1">
 
         <div class="row g-4">
             
@@ -208,7 +209,7 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Add New Category</h2>
-        <form action="/PHP-CAFETERA/app/controllers/categoryController.php" method="post">
+        <form action="/admin/categories/create" method="post">
               <input type="hidden" name="add_category" value="1">
 
           <label for="cat_name" class="form-label">Name:</label>
@@ -220,8 +221,6 @@
     </div>
 
   </main>
-</div>
-
 <script>
 const modal   = document.getElementById("myModal");
 const link    = document.getElementById("openModalLink");

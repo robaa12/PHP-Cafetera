@@ -1,7 +1,12 @@
-<link rel="stylesheet" href="/PHP-Cafetera/public/assets/css/bootstrap.css">
-<link rel="stylesheet" href="/PHP-Cafetera/public/assets/css/sidebar.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.css">
 
 <style>
+  body {
+    background: #f4efe9;
+  }
+  .content {
+    padding: 28px;
+  }
   .panel {
     background: #f7f1ea;
     border-radius: 16px;
@@ -30,12 +35,10 @@
   }
 </style>
 
-<div class="app">
-  <?php
-    $active = 'products';
-    require_once __DIR__ . '/../layouts/sidebar.php';
-    require_once __DIR__ . '/../../controllers/productController.php';
-    require_once __DIR__ . '/../../controllers/categoryController.php';
+<?php
+    require_once __DIR__ . '/../layouts/navbar.php';
+    require_once __DIR__ . '/../../controllers/ProductController.php';
+    require_once __DIR__ . '/../../controllers/CategoryController.php';
 
     $productController = new ProductController();
 
@@ -49,14 +52,14 @@
         echo '<div class="alert alert-danger m-4">Product not found!</div>';
         exit();
     }
-  ?>
+?>
 
   <main class="content">
     <div class="panel">
 
       <div class="d-flex justify-content-between align-items-center mb-1">
         <h2 class="mb-0">Edit Product</h2>
-        <a href="/PHP-CAFETERA/app/views/admin/products.php" 
+        <a href="/admin/products" 
            class="btn btn-outline-secondary btn-sm">
           ← Back to Products
         </a>
@@ -72,7 +75,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="/PHP-CAFETERA/app/controllers/productController.php" 
+      <form action="/admin/products/update" 
             method="post" 
             enctype="multipart/form-data">
 
@@ -139,7 +142,7 @@
 
             <div class="d-flex gap-2 mt-4">
               <button type="submit" class="btn btn-success px-4">Update Product</button>
-              <a href="/PHP-CAFETERA/app/views/admin/products.php" 
+              <a href="/admin/products" 
                  class="btn btn-outline-secondary px-4">
                 Cancel
               </a>
@@ -168,8 +171,6 @@
       </form>
     </div>
   </main>
-</div>
-
 <script>
 const imageInput  = document.getElementById('image');
 const preview     = document.getElementById('preview');

@@ -36,12 +36,12 @@ if(strlen($name) > 100){
 }
 
 if($this->categoryModel->create($name)){
-    header("Location: /PHP-CAFETERA/app/views/admin/add_product.php?msg=category_Added");
+    header("Location: /admin/add-product?msg=category_added");
     exit();
 }
 
 else{
-    header("Location: /PHP-CAFETERA/app/views/admin/add_product.php?msg=category_exists");
+    header("Location: /admin/add-product?msg=category_exists");
     
 }
 

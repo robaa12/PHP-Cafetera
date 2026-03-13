@@ -1,42 +1,6 @@
 <?php
-require_once __DIR__ . "/../../config/Database.php";
-require_once __DIR__ . "/../../models/User.php";
-
-$database = new Database();
-$db = $database->connect();
-
-// Process login
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = trim($_POST["email"] ?? "");
-    $password = $_POST["password"] ?? "";
-
-    if (empty($email) || empty($password)) {
-        header("Location: /login?error=Email and password required");
-        exit();
-    }
-
-    $userModel = new User($db);
-    $user = $userModel->getByEmail($email);
-
-    if (!$user || !password_verify($password, $user["password"])) {
-        header("Location: /login?error=Invalid email or password");
-        exit();
-    }
-
-    $_SESSION["user_id"] = $user["id"];
-    $_SESSION["user_name"] = $user["name"];
-    $_SESSION["user_role"] = $user["role"];
-
-    if ($user["role"] === "admin") {
-        header("Location: /admin/users");
-    } else {
-        header("Location: /");
-    }
-    exit();
-}
-
-$error = $_GET["error"] ?? null;
-$success = $_GET["success"] ?? null;
+$error = $error ?? ($_GET["error"] ?? null);
+$success = $success ?? ($_GET["success"] ?? null);
 ?>
 
 <!DOCTYPE html>

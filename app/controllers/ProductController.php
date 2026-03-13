@@ -50,7 +50,7 @@ class ProductController {
         }
 
         if ($this->productModel->create($name, (int)$category_id, (float)$price, $image)) {
-            header("Location: /PHP-CAFETERA/app/views/admin/add_product.php?msg=product_added");
+            header("Location: /admin/add-product?msg=product_added");
             exit();
         } else {
             $error = "Failed to add product!";
@@ -110,7 +110,7 @@ class ProductController {
         }
 
         if ($this->productModel->update($id, $name, (int)$category_id, (float)$price, $image)) {
-            header("Location: /PHP-CAFETERA/app/views/admin/products.php?msg=product_updated");
+            header("Location: /admin/products?msg=product_updated");
             exit();
         } else {
             $error   = "Failed to update product!";
@@ -125,7 +125,7 @@ class ProductController {
         $image   = $_GET['image']       ?? '';
 
         if ($id <= 0) {
-            header("Location: /PHP-CAFETERA/app/views/admin/products.php?msg=error");
+            header("Location: /admin/products?msg=error");
             exit();
         }
 
@@ -136,10 +136,10 @@ class ProductController {
         }
 
         if ($this->productModel->delete($id)) {
-            header("Location: /PHP-CAFETERA/app/views/admin/products.php?msg=product_deleted");
+            header("Location: /admin/products?msg=product_deleted");
             exit();
         } else {
-            header("Location: /PHP-CAFETERA/app/views/admin/products.php?msg=error");
+            header("Location: /admin/products?msg=error");
             exit();
         }
     }

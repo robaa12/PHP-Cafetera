@@ -1,7 +1,12 @@
-<link rel="stylesheet" href="/PHP-Cafetera/public/assets/css/bootstrap.css">
-<link rel="stylesheet" href="/PHP-Cafetera/public/assets/css/sidebar.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.css">
 
 <style>
+  body {
+    background: #f4efe9;
+  }
+  .content {
+    padding: 28px;
+  }
   .panel {
     background: #f7f1ea;
     border-radius: 16px;
@@ -24,15 +29,13 @@
   }
 </style>
 
-<div class="app">
-  <?php
-    $active = 'products';
-    require_once __DIR__ . '/../layouts/sidebar.php';
-    require_once __DIR__ . '/../../controllers/productController.php';
+<?php
+  require_once __DIR__ . '/../layouts/navbar.php';
+  require_once __DIR__ . '/../../controllers/ProductController.php';
 
-    $productController = new ProductController();
-    $products          = $productController->getAllProducts();
-  ?>
+  $productController = new ProductController();
+  $products          = $productController->getAllProducts();
+?>
 
   <main class="content">
     <div class="panel">
@@ -42,7 +45,7 @@
           <h2 class="mb-0">All Products</h2>
           <div class="text-muted small">Dashboard &gt; Products</div>
         </div>
-        <a href="/PHP-CAFETERA/app/views/admin/add_product.php" 
+        <a href="/admin/add-product" 
            class="btn btn-success">
           + Add New Product
         </a>
@@ -78,7 +81,7 @@
       <?php if(empty($products)): ?>
         <div class="text-center text-muted py-5">
           <h5>No products found</h5>
-          <a href="/PHP-CAFETERA/app/views/admin/add_product.php" class="btn btn-success mt-2">
+          <a href="/admin/add-product" class="btn btn-success mt-2">
             Add Your First Product
           </a>
         </div>
@@ -124,12 +127,12 @@
 
                   <td>
                     <div class="d-flex gap-2">
-                      <a href="/PHP-CAFETERA/app/views/admin/edit_product.php?id=<?= $product['id'] ?>" 
+                      <a href="/admin/edit-product?id=<?= $product['id'] ?>" 
                          class="btn btn-sm btn-outline-primary">
                         Edit
                       </a>
 
-                      <a href="/PHP-CAFETERA/app/controllers/productController.php?delete_product=1&id=<?= $product['id'] ?>&image=<?= urlencode($product['image']) ?>"
+                       <a href="/admin/products/delete?id=<?= $product['id'] ?>&image=<?= urlencode($product['image']) ?>"
                          class="btn btn-sm btn-outline-danger"
                          onclick="return confirm('Are you sure you want to delete <?= htmlspecialchars($product['name']) ?>?')">
                          Delete
@@ -145,4 +148,3 @@
 
     </div>
   </main>
-</div>
