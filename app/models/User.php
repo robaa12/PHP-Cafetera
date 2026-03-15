@@ -11,6 +11,7 @@ class User
     public $room_id;
     public $image;
     public $role;
+    public $ext;
     public $created_at;
 
     public function __construct($db)
@@ -24,7 +25,7 @@ class User
         $query =
             "INSERT INTO " .
             $this->table .
-            " (name, email, password, room_id, image, role, created_at) VALUES (:name, :email, :password, :room_id, :image, :role, :created_at)";
+            " (name, email, password, room_id, image, role, ext, created_at) VALUES (:name, :email, :password, :room_id, :image, :role, :ext, :created_at)";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":email", $this->email);
@@ -32,6 +33,7 @@ class User
         $stmt->bindParam(":room_id", $this->room_id);
         $stmt->bindParam(":image", $this->image);
         $stmt->bindParam(":role", $this->role);
+        $stmt->bindParam(":ext", $this->ext);
         $stmt->bindParam(":created_at", $this->created_at);
         return $stmt->execute();
     }

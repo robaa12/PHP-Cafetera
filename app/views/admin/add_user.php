@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST["password"] ?? "";
     $confirm = $_POST["confirm_password"] ?? "";
     $room = trim($_POST["room_no"] ?? "");
+    $etc = trim($_POST["etc"] ?? "");
+    $ext = trim($_POST["ext"] ?? "");
 
     // Validate
     if (empty($name) || strlen($name) < 3) {
@@ -98,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user->room_id = $roomData["id"];
     $user->image = $imageName;
     $user->role = "user";
+    $user->etc = $ext;
     $user->save();
 
     header("Location: /admin/users?success=User added successfully");
@@ -113,15 +116,69 @@ $success = $_GET["success"] ?? null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
-    <?php include __DIR__ . "/../layouts/jsCDN.php"; ?>
+<?php include __DIR__ . "/../layouts/jsCDN.php"; ?>
+    <style>
+        .page-title{
+            font-weight:700;
+            color:#4E342E;
+        }
+
+        .card {
+            border: 1px solid #4E342E;
+            border-radius:14px;
+            overflow:hidden;
+        }
+
+        .card-header{
+            background:#4E342E;
+            color:#fff;
+            font-weight:600;
+        }
+
+        .btn-action{
+            border-radius:20px;
+            padding:4px 12px;
+            font-size:0.85rem;
+            transition:all .25s ease;
+            border-color:#4E342E;
+            background:#4E342E;
+            color:#fff;
+        }
+
+        .btn-action:hover{
+            background:#6f4e37;
+            border-color:#6f4e37;
+            color:#fff;
+        }
+
+        .btn-save{
+            border-radius:20px;
+            padding:8px 20px;
+            font-size:0.9rem;
+            transition:all .25s ease;
+            border-color:#4E342E;
+            background:#4E342E;
+            color:#fff;
+        }
+
+        .btn-save:hover{
+            background:#6f4e37;
+            border-color:#6f4e37;
+            color:#fff;
+        }
+
+        .alert{
+            border-radius:12px;
+        }
+    </style>
 </head>
 <body>
 <?php include __DIR__ . "/../layouts/navbar.php"; ?>
 <div class="container mt-5" style="max-width: 600px;">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Add User</h2>
-        <a href="/admin/users" class="btn btn-secondary">Back to Users</a>
+        <h2 class="page-title">Add User</h2>
+        <a href="/admin/users" class="btn btn-action">← Back to Users</a>
     </div>
 
     <?php if ($error): ?>
@@ -132,7 +189,10 @@ $success = $_GET["success"] ?? null;
         <div class="alert alert-success"><?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
 
-    <div class="card">
+<div class="card">
+        <div class="card-header">
+            Add New User
+        </div>
         <div class="card-body">
             <form method="POST" enctype="multipart/form-data">
 
@@ -162,12 +222,17 @@ $success = $_GET["success"] ?? null;
                 </div>
 
                 <div class="mb-3">
+                    <label class="form-label">Ext.</label>
+                    <input type="text" class="form-control" name="ext">
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Profile Picture</label>
                     <input type="file" class="form-control" name="profile_picture" accept="image/*">
                     <small class="text-muted">Max 1MB - JPG, JPEG, PNG only</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Add User</button>
+                <button type="submit" class="btn btn-save w-100">Add User</button>
             </form>
         </div>
     </div>

@@ -34,14 +34,11 @@ foreach ($rooms as $room) {
     <meta charset="UTF-8">
     <title>Users Management</title>
 
-    <?php include __DIR__ . "/../layouts/jsCDN.php"; ?>
+<?php include __DIR__ . "/../layouts/jsCDN.php"; ?>
     <style>
-        body {
-            background: #f4f6f9;
-        }
-
         .page-title {
-            font-weight: 600;
+            font-weight: 700;
+            color:#4E342E;
         }
 
         .user-img {
@@ -52,13 +49,69 @@ foreach ($rooms as $room) {
         }
 
         .card {
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+            border: 1px solid #4E342E;
+            border-radius:14px;
+            overflow:hidden;
+        }
+
+        .card-header{
+            background:#4E342E;
+            color:#fff;
         }
 
         .table thead {
-            background: #343a40;
+            background: #4E342E;
             color: white;
+        }
+
+        .table th{
+            background:#4E342E;
+            color:#fff;
+            font-weight:600;
+            border:none;
+        }
+
+        .btn-action{
+            border-radius:20px;
+            padding:4px 12px;
+            font-size:0.85rem;
+            transition:all .25s ease;
+            border-color:#4E342E;
+            background:#4E342E;
+            color:#fff;
+        }
+
+        .btn-action:hover{
+            background:#6f4e37;
+            border-color:#6f4e37;
+            color:#fff;
+        }
+
+         .btn-delete{
+            border-radius:20px;
+            padding:4px 12px;
+            font-size:0.85rem;
+            transition:all .25s ease;
+            border-color: #dc3545;
+            background:#dc3545;
+            color:#fff;
+            text-decoration: none;
+         }
+        .btn-delete:hover{
+            color:#dc3545;
+            background:#fff;
+            border-color:#dc3545;
+            text-decoration: none;
+        }
+
+        .badge{
+            padding:6px 12px;
+            border-radius:20px;
+            font-size:0.8rem;
+        }
+
+        .alert{
+            border-radius:12px;
         }
     </style>
 
@@ -69,15 +122,15 @@ foreach ($rooms as $room) {
     <?php include __DIR__ . "/../layouts/navbar.php"; ?>
     <div class="container py-5">
 
-        <div class="card">
+<div class="card">
 
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex justify-content-between align-items-center">
 
                 <h4 class="page-title mb-0">
                     Users Management
                 </h4>
 
-                <a href="/admin/add-user" class="btn btn-primary">
+                <a href="/admin/add-user" class="btn btn-action">
                     + Add User
                 </a>
 
@@ -201,7 +254,7 @@ foreach ($rooms as $room) {
 
                                                 <input type="hidden" name="id" value="<?= (int) $user['id'] ?>">
 
-                                                <button class="btn btn-sm btn-outline-danger">
+                                                <button class="btn-delete">
                                                     Delete
                                                 </button>
 
